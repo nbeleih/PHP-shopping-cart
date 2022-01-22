@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>myMovies Xpress! - Cart</title>
+		<link rel="stylesheet" type="text/css" href="../css/mySite.css">
+		<script src="./script.js"></script>
+	</head>
+	<body>
+		<h3>Welcome, <?= $_SESSION["displayName"] ?> (<a href="javascript: confirmLogout()">logout</a>)</h3>
+		<h1>myMovies Xpress!</h1>
+
+		<?php if(count($movies) > 0) 	: ?>
+
+		
+		<p>There are currently <?= count($movies) ?> movies in your shopping cart</p>
+
+			<table>
+				<tr>
+					<th>Poster</th>
+					<th>Title(Year)</th>
+					<th>More Info</th>
+					<th>Remove Movie</th>
+
+				</tr>
+
+				<?php foreach($movies as $movieId): ?>
+
+							
+							<tr>
+								<td> <img src= "<?= getMovieData($movieId)['Poster'] ?>" alt="Pic of Movie Poster" height="100"> </td>
+								<td> <a href="https://www.imdb.com/title/<?= $movie['IMDB_ID'] ?>/"> <?= getMovieData($movieId)['Title'] ?> ( <?= getMovieData($movieId)['Year'] ?> ) </a> </td>
+								<?php $movie_id = getMovieData($movieId)['ID'] ?>
+								<td> <a href="javascript:void(0);" onclick='displayMovieInformation(movie_id);'>View More Info</a> </td>
+								<td> <a href="javascript: confirmRemove('<?= getMovieData($movieId)['Title'] ?>', '<?= getMovieData($movieId)['ID'] ?>')">X</a> </td>
+		
+			
+							</tr>
+	
+
+				<?php endforeach; ?>
+
+				 
+
+			</table>
+		
+		<?php else : ?>
+
+			<p>Add some movies to your shopping cart</p>
+
+		<?php endif; ?>
+		
+		<input type="button" value="Add Movie" onclick="window.location.href='./search.php'" />
+		<input type="button" value="Checkout" onclick="javascript: confirmCheckout()" />
+
+		<div id='modalWindow' class='modal'>
+			<div id='modalWindowContent' class='modal-content'>
+			</div>
+		</div>
+	</body>
+</html>
